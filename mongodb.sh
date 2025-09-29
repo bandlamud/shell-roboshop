@@ -19,10 +19,10 @@ fi
 
 VALIDATE() { # functions receive inputs through args just like shell script args
     if [ $1 -ne 0 ]; then
-        echo -e  "$2 ... $R FAILURE $N" &>>$LOG_FILE
+        echo -e  "$2 ... $R FAILURE $N" tee -a $LOG_FILE
         exit 1
     else
-        echo -e "$2 ... $G SUCCESS $N" &>>$LOG_FILE
+        echo -e "$2 ... $G SUCCESS $N" tee -a $LOG_FILE
     fi
 }
 
@@ -32,14 +32,14 @@ VALIDATE $? "Adding Mango repo"
 dnf install mongodb-org -y &>>$LOG_FILE
 VALIDATE $? "Installing MongoDB"
 
-systemctl enable mongod  &>>$LOG_FILE
+systemctl enable mongod  
 VALIDATE $? "Enable MangoDB"
 
-systemctl start mongod  &>>$LOG_FILE
+systemctl start mongod  
 VALIDATE $? "Start MangoDB"
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 
-systemctl restart mongod  &>>$LOG_FILE
+systemctl restart mongod  
 VALIDATE $? "Restarted  MangoDB"
 
