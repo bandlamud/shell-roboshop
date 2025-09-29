@@ -8,6 +8,7 @@ N="\e[0m"
 USERID=$(id -u)
 LOG_FOLDER="/var/log/shell-roboshop"
 SCRIPT_NAME="$( echo $0 | cut -d "." -f1 )" 
+SCRIPT_DIR=$pwd
 MONGODB_HOST=mongodb.daws89s.fun
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log" # /var/log/shell-script/16-logs.log
 
@@ -44,7 +45,7 @@ VALIDATE $? "Craeting system user"
 mkdir /app 
 VALIDATE $? "Creating app directory"
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip  &>>$LOG_FILE
 VALIDATE $? "Downloading catalogue application"
 
 cd /app 
@@ -56,7 +57,7 @@ VALIDATE $? "Unzip catalogue"
 npm install &>>$LOG_FILE
 VALIDATE $? "Installing dependencys"
 
-cp catalogue.service /etc/systemd/system/catalogue.service &>>$LOG_FILE
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$LOG_FILE
 VALIDATE $? "copying catalogue.service"
 
 systemctl daemon-reload
