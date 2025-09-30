@@ -29,10 +29,10 @@ VALIDATE() { # functions receive inputs through args just like shell script args
     fi
 }
 
-dnf install maven -y $LOG_FILE
+dnf install maven -y &>>$LOG_FILE
 
 
-id roboshop $LOG_FILE
+id roboshop &>>$LOG_FILE
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
     VALIDATE $? "Craeting system user"
