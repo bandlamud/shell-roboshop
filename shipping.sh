@@ -55,10 +55,9 @@ VALIDATE $? "Removing exitsing code" &>>$LOG_FILE
 unzip /tmp/shipping.zip &>>$LOG_FILE
 VALIDATE $? "Unzip shipping"
 
-mvn clean package &>>$LOG_FILE
-VALIDATE $? "installing dependencies"
+mvn clean package  &>>$LOG_FILE
 mv target/shipping-1.0.jar shipping.jar &>>$LOG_FILE
-VALIDATE $? "copying jar file"
+
 
 cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service &>>$LOG_FILE
 
