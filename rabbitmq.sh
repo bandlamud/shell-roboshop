@@ -29,19 +29,19 @@ VALIDATE() { # functions receive inputs through args just like shell script args
 }
 
 
-cp $SCRIPT_DIR/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
+cp $SCRIPT_DIR/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>>$LOG_FILE
 VALIDATE $? "copying rabbitmq repo"
 
-dnf install rabbitmq-server -y
+dnf install rabbitmq-server -y &>>$LOG_FILE
 VALIDATE $? "Installing rabbit mq"
 
-systemctl enable rabbitmq-server
+systemctl enable rabbitmq-server &>>$LOG_FILE
 VALIDATE $? "Enabling rabbit mq"
 
-systemctl start rabbitmq-server
+systemctl start rabbitmq-server &>>$LOG_FILE
 VALIDATE $? "Start rabbit mq"
 
-rabbitmqctl add_user roboshop roboshop123
+rabbitmqctl add_user roboshop roboshop123 &>>$LOG_FILE
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
 VALIDATE $? "Setting up Permission"
 
