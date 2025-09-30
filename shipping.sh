@@ -40,7 +40,7 @@ else
     echo -e "User alredy exist .... $Y SKIPPING $N"
 fi
 
-mkdir -p /app 
+mkdir -p /app &>>$LOG_FILE
 VALIDATE $? "Creating app directory"
 
 curl -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip  &>>$LOG_FILE
@@ -62,13 +62,13 @@ VALIDATE $? "copying jar file"
 
 cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service &>>$LOG_FILE
 
-systemctl daemon-reload
+systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "Deamon relod"
 
-systemctl enable shipping
+systemctl enable shipping &>>$LOG_FILE
 VALIDATE $? "elabling shipping"
 
-dnf install mysql -y 
+dnf install mysql -y  &>>$LOG_FILE
 VALIDATE $? "installing mysql"
 
 
